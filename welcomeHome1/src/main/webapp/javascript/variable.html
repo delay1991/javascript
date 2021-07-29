@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src=js/function.js> </script> -->
+    <script>
+        function newFunc(args, args2) { //타입설정 필요없는 변수...
+            console.log('newFunc(' + args + ',' + args2 + ')'); //정의
+            //let ary=[args,args2];
+            // let obj = {
+            //     name: args,
+            //     age: args2,
+            //     //{}오브젝트선언의미
+            //     showInfo: function () {
+            //         return "이름: " + this.name + ", 나이: " + this.age;
+            //     }
+            // };
+            let str = '<li>' + args + ',' + args2 + '</li>';
+            return str;
+        }
+        
+        function makeList(arg){
+            let str = '<li id="id1">Hello</li>'; //node > tag(element)
+            let li = document.createElement('li');//element 생성
+            li.setAttribute('id','id1'); //attribute node 추가
+            let text = document.createTextNode(arg); //textNode 생성
+            li.appendChild(text); //<li>Hellow</li> 부모노드에 자식노드추가
+
+            return li;
+
+        }
+        document.write('<ul>');
+        //콘솔영역 단순실행_자바스크립트 오류잘안남
+        let result = newFunc('Hong', '12');
+        document.write(result);
+        document.write(newFunc('Hwang', '20'));
+        document.write('</ul>');
+        // console.log(typeof result, result.name, result.showInfo());
+    
+    let ul = document.getElementsByTagName('ul');
+    ul[0].appendChild(makeList('Hello'));
+    ul[0].appendChild(makeList('World'));
+    
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

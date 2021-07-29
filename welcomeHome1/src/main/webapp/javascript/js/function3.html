@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p class="cls">내용1</p>
+    <p>내용2</p>
+    <p>내용3</p>
+    <p>내용4</p>
+    <p>내용5</p>
+
+    <script>
+    let bodies =document.getElementsByTagName('body');
+    
+    console.log(bodies[0].children[0].innerHTML);
+    console.log(bodies[0].childNodes[1].innerHTML);
+    console.log(window);
+    console.log(this); //이벤트x 오브젝트x 전체영역에서 윈도우하위를 펼쳐서 도큐먼트태그확인...
+      let pTag = document.getElementsByTagName('p');  //HTML collection
+      pTag = document.querySelectorAll('p');
+      console.log(pTag); 
+        for(let i=0; i<pTag.length; i++){
+            // pTag[i].onclick=function(){
+            //     window.alert(pTag[i].innerHTML); //텍스트내용읽어오겠다
+            //     console.log(pTag[i].childNodes[0].nodeValue); //텍스트까지 생각해야한다..첫번째와 마지막은 특별한의미~~ 칠드런은 엘리먼트기준
+            //     console.log(pTag[i].firstChild.nodeValue);
+                pTag[i].onclick =clickFunc;
+                pTag[i].onmouseover =mover;
+                // pTag[i].onmouseout =mout;
+                pTag[i].addEventListener('mouseout', mout);
+                pTag[i].addEventListener('mouseout', mout2);
+                pTag[i].removeEventListener('mouseout', mout2);
+                ;
+            }
+            function mout2(){
+                console.log(this);
+            }
+
+            function mout(){
+                this.style.color ='blue';
+            }
+
+            function mover(){
+                this.style.color ='red';
+            }
+
+        function clickFunc(){
+            window.alert(this.innerHTML); 
+            console.log(this.childNodes[0].nodeValue); 
+            console.log(this.firstChild.nodeValue);
+        }
+    </script>
+</body>
+</html>

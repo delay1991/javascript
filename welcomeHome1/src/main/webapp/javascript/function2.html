@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body id="bdy">
+    <!-- <ul>
+    <li>사과</li>
+    <li>바나나</li>
+    <li>체리</li>
+    </ul> -->
+    <!--페이지를동적으로만들기위해...이형태를 많이쓸꺼램...ㅠㅠ기능외워야함 몇개안된데...-->
+    입력: <input type="text" name="text" id="inputVal" value="Orange">
+    <button onclick="addFunc()">추가</button>
+
+    <script>
+        console.log(this);
+
+        const fruits = ['apple', 'banana', 'cherry', 'melon'];
+
+        function makeList() {
+            let bodyTag = document.getElementById('bdy'); //id값으로 요소선택
+            let ulTag = document.createElement('ul'); //ul태그생성
+
+            for (let i = 0; i < fruits.length; i++) {
+                // let appleTag = document.createElement('li'); //li태그생성
+                // let apple = document.createTextNode(fruits[i]); //텍스트생성
+                // appleTag.appendChild(apple);
+                ulTag.appendChild(creatList(fruits[i]));
+            }
+            bodyTag.appendChild(ulTag);
+        }
+
+        function creatList(arg) {
+            //<li>apple<button onclick='delFunc()'>Delete</li>
+            let liTag = document.createElement('li');
+            let text = document.createTextNode(arg);
+
+            let btn = document.createElement('button');
+            let delText = document.createTextNode('delete');
+            btn.appendChild(delText);
+            btn.onclick = delFunc;
+           
+
+            // btn.onclick = function () {
+            //     console.log('delete');
+            // }
+
+            liTag.appendChild(text);
+            liTag.appendChild(btn);
+            
+            liTag.onmouseover = function(){
+                this.style.backgroundColor = 'yellow';
+            }
+
+            liTag.onmouseout = function(){
+                this.style.backgroundColor = null;
+            }
+            
+            return liTag;
+        }
+
+        function delFunc() {
+            console.log(this); //이벤트일 경우에 this는 이벤트가 발생하는 element
+            this.parentNode.remove();
+       
+        }
+
+        //사용자입력값을 사용하여 ul태그하위에 자식으로 붙여넣기
+        function addFunc() {
+            let userInput = document.getElementById('inputVal').value;
+            console.log(userInput);
+            let li = creatList(userInput); // <li>사용자입력<button></button></li>
+            console.log(li);
+            let ulTag = document.getElementsByTagName('ul');
+            console.log(ulTag[0]);
+            ulTag[0].appendChild(li);
+
+        }
+
+        makeList();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let jsonData = `[
+{"id":1,"first_name":"Denna","last_name":"Macellar","email":"dmacellar0@sogou.com","gender":"Genderqueer","ip_address":"93.209.163.215"},
+{"id":2,"first_name":"Karlie","last_name":"Gauch","email":"kgauch1@chron.com","gender":"Female","ip_address":"234.85.169.234"},
+{"id":3,"first_name":"Cristionna","last_name":"Kopfen","email":"ckopfen2@springer.com","gender":"Male","ip_address":"224.14.254.141"},
+{"id":4,"first_name":"Elfreda","last_name":"Cockshoot","email":"ecockshoot3@123-reg.co.uk","gender":"Male","ip_address":"46.136.99.143"},
+{"id":5,"first_name":"Gae","last_name":"McLugaish","email":"gmclugaish4@simplemachines.org","gender":"Male","ip_address":"78.38.214.209"},
+{"id":6,"first_name":"Farris","last_name":"Coverley","email":"fcoverley5@g.co","gender":"Agender","ip_address":"141.49.104.89"},
+{"id":7,"first_name":"Joelle","last_name":"Derges","email":"jderges6@ebay.com","gender":"Female","ip_address":"224.124.233.51"},
+{"id":8,"first_name":"Menard","last_name":"Ducroe","email":"mducroe7@arizona.edu","gender":"Polygender","ip_address":"252.162.0.241"},
+{"id":9,"first_name":"Georas","last_name":"Mearing","email":"gmearing8@netlog.com","gender":"Agender","ip_address":"58.74.134.173"},
+{"id":10,"first_name":"Minda","last_name":"Wyman","email":"mwyman9@theguardian.com","gender":"Non-binary","ip_address":"164.27.156.99"}
+]`
+        let objData = JSON.parse(jsonData);
+        console.log(objData);
+
+        for (let i = 0; i < objData.length; i++) {
+            let tr =document.createElement('tr');
+            //필드의 갯수만큼 반복할때 for.. in 반복문 사용
+            for(let field in objData[0]){
+                let td = document.createElement('td');
+                let text = document.createTextNode(objData[i][field]);
+                td.appendChild(text);
+                tr.appendChild(td);
+            }
+            //삭제버튼생성
+            let td =document.createElement('td');
+            let btn=document.createElement('input');
+            btn.type = 'button';
+            btn.value= '삭제';
+            td.appendChild(btn);
+            tr.appendChild(td);
+
+        }
+        document.addEventListener('DOMContentLoaded', function(){ //이벤트추가
+            document.getElementById('show').appendChild(table);
+
+            let tbody = document.querySelector('#list > tbody');
+            // console.log('2'); 순서찍어보기
+        });
+        // document.getElementById('show').appendChild(ul); //show는 아직모르니~ 페이지가 다읽어진다음 실행domcontentloaded.
+        // console.log('3');
+    </script>
+</head>
+
+<body>
+    <div id="show">
+        <table id='list'>
+            <thead>
+            <tr>
+                <th>사원번호</th>
+                <th>성</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>성별</th>
+                <th>삭제기능</th> <!-- 버튼-->
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title></title>
+    <meta name="generator" content="editplus" />
+    <meta name="author" content="김종현" />
+
+    <style type="text/css">
+        #inputForm {
+            width: 280px;
+            height: 130px;
+            background-color: #e0f0b5;
+            border: 1px solid orange;
+            padding: 20px;
+            margin: 20px 100px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /*디자인은 큰틀부터 디자인하자.*/
+        #list {
+            width: 500px;
+            border: 1px solid orange;
+            /*겉테두리와 안테두리를 하나로 합쳐준다. */
+            border-collapse: collapse;
+        }
+
+        /* 누구 자식인지 반드시 명시해 준다.*/
+        #list td,
+        #list th {
+            font-size: 12px;
+            border: 1px solid orange;
+            padding: 3px;
+        }
+
+        #list th {
+            background-color: #cc99cc;
+            width: 10px;
+        }
+
+        #list .td1 {
+            width: 3px;
+            text-align: center;
+        }
+
+        #list .td2 {
+            width: 150px;
+            text-align: center;
+        }
+
+        #list .td3 {
+            width: 50px;
+            text-align: center;
+        }
+
+        #list .td4 {
+            width: 50px;
+            text-align: center;
+        }
+
+        #list .td5 {
+            width: 5px;
+            text-align: center;
+        }
+
+        
+        /*부모 자식 관계 */
+        #list .altRow {
+            background-color: #e0f0b5;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="inputForm">
+        <!-- Ex21_board.htm -->
+        <form name='board' action="aa.html" onsubmit="submitFun(event)">
+            번호: <input type="number" name="num" id="num" value="1"><br>
+            제목: <input type="text" name="title" id="title" value="연습연습연습"><br>
+            이름: <input type="text" name="writer" id="writer" value="홍길동5"><br>
+            날짜: <input type="date" name="regDate" id="regDate" value="2021-07-12"><br><br>
+            <input type="submit" value="등록">
+            <input type="button" value="수정" id="updateButton">
+        </form>
+    </div>
+
+    <h3 style="margin-left: 200px;">게시판 리스트</h3>
+    <button id='delBtn' >선택삭제</button>
+    <table id="list">
+        <thead> <!-- 타이틀만있고 실제로는 데이터가져와서 씀-->
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>이름</th>
+                <th>날짜</th>
+                <th>선택</th>
+            </tr>
+        </thead>
+        <tr id='1'>
+            <td class="td1">1</td>
+            <td class="td2">게시판연습1</td>
+            <td class="td3">홍길동1</td>
+            <td class="td4">2012-01-01</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr id='2' class="altRow">
+            <td class="td1">2</td>
+            <td class="td2">게시판연습2</td>
+            <td class="td3">홍길동2</td>
+            <td class="td4">2012-11-02</td>
+            <td><input type="checkbox"></td>
+
+        </tr>
+
+        <tr id='3'>
+            <td class="td1">3</td>
+            <td class="td2">게시판연습3</td>
+            <td class="td3">홍길동3</td>
+            <td class="td4">2012-02-03</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr id='4' class="altRow">
+
+            <td class="td1">4</td>
+            <td class="td2">게시판연습4</td>
+            <td class="td3">홍길동4</td>
+            <td class="td4">2012-07-04</td>
+            <td><input type="checkbox"></td>
+        </tr>
+
+    </table>
+    <script src="js/board.js"></script>
+</body>
+
+</html>

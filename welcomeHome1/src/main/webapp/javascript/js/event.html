@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id='memberList'>
+    <form name="frm" action="aaa.html"  onsubmit="submitFun(event)">
+        이름: <input type="text" name="name" id="name"><br>
+        나이: <input type="number" name="age" id="age"><br>
+        전화번호: <input type="tel" name="phone" id="phone"><br>
+        <input type="submit" value="저장">
+    </form>
+   </ul>
+
+    <script>
+        function submitFun(e) {
+            e.preventDefault();//return false; submit의 기본기능차단. 
+            console.log('dd'); 
+            if(document.frm.name.value ==''){
+                alert('이름을 입력하세요');
+                document.frm.name.focus();
+                return; //function종료.
+            }
+
+            if(document.frm.age.value ==''){
+                alert('나이를 입력하세요');
+                document.frm.name.focus();
+                return; //function종료.
+            }
+
+            let name = document.frm.name.value;
+            let age = document.frm.age.value;
+            let phone = document.frm.phone.value;
+
+            let uList = document.getElementById('memberList');
+            //0, null, '' => false이고 1, 'val' ->true
+            if(uList.childNodes.length){
+                uList.insertBefore(createList(name, age, phone), uList.firstElementChild);
+            }else{
+                uList.appendChild(createList(name, age,phone));
+            }
+        
+
+            document.frm.name.value =''; //사용자입력후 입력값을 지움
+            document.frm.age.value ='';
+            document.frm.name.focus(); //첫번째 입력값의 위치에 초점
+        }
+
+
+
+
+        function createList(arg1, arg2,arg3){
+        //<li>name1 = age</li>
+        let liTag = document.createElement('li');
+        let text = document.createTextNode(arg1 + '-' + arg2+'-'+arg3);
+        liTag.appendChild(text);
+        
+        return liTag;
+        }
+    </script>
+</body>
+
+</html>
