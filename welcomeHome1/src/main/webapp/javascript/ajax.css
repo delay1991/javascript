@@ -1,44 +1,24 @@
-
 #show>div:nth-of-type(2n) {
     background-color: blanchedalmond;
 }
 
 .row {
-    border: 1px solid black;
-    width: 500px;
+    border: 1px solid;
+    width: 600px;
+
 }
 
 span {
-    color: red;
+    color: blue;
     padding: 10px;
     display: inline-block;
     width: 15px;
 }
 
 strong {
-    display: inline-block;
-    background-color: lightcyan;
-    text-align: end;
-    margin-left: 15px;
-}
-
-strong1{
-    background-color: lightcyan;
     margin-left: 50px;
-
-    
-}
-
-strong2{
     background-color: lightcyan;
-    margin-left:50px;
- 
 }
-
-
-
-
-
 
 .pagination button {
     color: black;

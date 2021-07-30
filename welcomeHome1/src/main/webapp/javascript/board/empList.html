@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+	<div id="container">
+		<form action="../../EmpListServlet.do" method="GET" onsubmit="submitFnc(event)">
+			<label for="uid">아이디:</label> 
+			<input type="text" name="uid" id="uid"><br>
+			<label for="upw">비밀번호:</label> 
+			<input type="password" name="upw" id="upw"><br> 
+			<input type="submit" value="로그인">
+		</form>
+	</div>
+	<script>
+		let form = document.querySelector('#container > form');
+		form.addEventListener('submit', function(event) { //또는 .onsubmit
+			event.preventDefault(); //넘어가기차단
+
+			let url = this.getAttribute('action');
+
+			let xhtp = new XMLHttpRequest();
+			xhtp.open('get', url);
+			xhtp.send();
+			xhtp.onload = function() {
+				let data = JSON.parse(xhtp.responseText);
+				console.log(data);
+			}
+		})
+
+		//html막아도 스크립트로 나올수있도록!
+		//태그가 엘리먼트..셋어트리뷰트해서 포/타입, 이너html해서 값넣기
+		//연습해놓으세요~ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ모르겠는데
+	</script>
+</body>
+</html>

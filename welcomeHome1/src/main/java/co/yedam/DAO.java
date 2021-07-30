@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 
@@ -17,7 +18,7 @@ public class DAO {
 	 try {
 		 Class.forName("oracle.jdbc.driver.OracleDriver");
 		 String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		 conn = DriverManager.getConnection(url, "demo", "1234");
+		 conn = DriverManager.getConnection(url, "hr", "hr");
 		 System.out.println("연결!");
 		 
 	 }catch(Exception e) {
@@ -25,5 +26,14 @@ public class DAO {
 	 }
  }
  
+ public void disconnect() {
+	 if(conn != null)
+		 try {
+			 //5. 연결종료
+			 conn.close();
+		 }catch(SQLException e) {
+			 e.printStackTrace();
+		 }
+ }
  
 }

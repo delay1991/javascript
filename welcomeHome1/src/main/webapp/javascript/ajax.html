@@ -7,17 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="ajax.css">
-    <script src='js/ajax.js'></script>
-
-
+    <!-- <script src='js/ajax.js'></script> -->
 </head>
 
 <body>
     <div class="title">
         <span>id</span>
         <strong >first_name</strong>
-        <strong style="margin:30px;">last_name</strong>
-        <strong style="margin:50px;">e-mail</strong>
+        <strong >last_name</strong>
+        <strong >e-mail</strong>
     </div>
     <div id="show"></div>
 
@@ -34,6 +32,69 @@
         <button>10</button>
         <button>16</button>
     </div>
+    <script>
+        function ajax(url, page) {
+            let divShow = document.querySelector('#show');
+            let cnt = divShow.children.length;
+            for (let i = 0; i < cnt; i++) {
+                divShow.removeChild(divShow.children[0]);
+            }
+
+            let startCnt, endCnt;
+            startCnt = (page - 1) * 10; //0~9, 10~19
+            endCnt = page * 10 - 1;
+
+            let xhtp = new XMLHttpRequest();
+            xhtp.open('get', url);
+            xhtp.send();
+            xhtp.onload = function () {
+                let showDiv = document.getElementById('show');
+                let data = JSON.parse(xhtp.responseText);
+
+                data.filter(function (val, idx) {
+                    if (startCnt <= idx && idx <= endCnt) {
+                        return val;
+                    }
+
+                }).forEach(function (val, idx) {
+                    //span: id, strong, fn, ln email
+                    let span = document.createElement('span');
+                    span.innerHTML = val.id;
+                    let strong1 = document.createElement('strong');
+                    strong1.innerHTML = val.first_name;
+                    let strong2 = document.createElement('strong');
+                    strong2.innerHTML = val.last_name;
+                    let strong3 = document.createElement('strong');
+                    strong3.innerHTML = val.email;
+                    let div = document.createElement('div');
+                    div.setAttribute('class', 'row');
+
+                    div.appendChild(span);
+                    div.appendChild(strong1);
+                    div.appendChild(strong2);
+                    div.appendChild(strong3);
+
+                    showDiv.appendChild(div);
+                });
+
+            }
+        }
+
+        ajax('MOCK_DATA1.json', 1); // 첫화면 ㅠㅠ
+        let btns = document.querySelectorAll('.pagination > button');
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', function () {
+                //클릭이벤트 시 button의 클래스를 초기화
+                for (let i = 0; i < btns.length; i++) {
+                    btns[i].className = '';
+                }
+                this.className = 'active';
+                let page = this.innerHTML;
+                ajax('MOCK_DATA1.json', page);
+            });
+        }
+    </script>
+
 </body>
 
 </html>

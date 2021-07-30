@@ -12,18 +12,19 @@
         xhtp.send();
         xhtp.onreadystatechange = function () {
             if (xhtp.readyState == 4 && xhtp.status == 200) {
-                console.log(JSON.parse(xhtp.response));
-                
+                let data = JSON.parse(xhtp.response);
+                console.log(data);
             }
         }
     </script>
 </head>
 
 <body>
-    <div class=title>
+    <div id='title'>
         <span>id</span>
         <strong>first_name</strong>
     </div>
+    <div class='show'></div>
 </body>
 
 </html>
