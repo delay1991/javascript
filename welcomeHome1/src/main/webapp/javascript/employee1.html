@@ -5,50 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>javascript/employee.html</title>
-    <script>
-        let jsonData = `[{"id":1,"first_name":"Lee","last_name":"Stovold","email":"lstovold0@cisco.com","gender":"Genderqueer"},
-{"id":2,"first_name":"Gae","last_name":"Midlar","email":"gmidlar1@amazonaws.com","gender":"Male"},
-{"id":3,"first_name":"Coriss","last_name":"Grumley","email":"cgrumley2@sourceforge.net","gender":"Male"},
-{"id":4,"first_name":"Claudie","last_name":"Mc Mechan","email":"cmcmechan3@gnu.org","gender":"Polygender"},
-{"id":5,"first_name":"Georg","last_name":"Bynold","email":"gbynold4@europa.eu","gender":"Male"},
-{"id":6,"first_name":"Sybila","last_name":"Roseburgh","email":"sroseburgh5@stanford.edu","gender":"Agender"},
-{"id":7,"first_name":"Lonnie","last_name":"Ortega","email":"lortega6@mlb.com","gender":"Polygender"},
-{"id":8,"first_name":"Cleve","last_name":"Worge","email":"cworge7@shareasale.com","gender":"Male"},
-{"id":9,"first_name":"Keen","last_name":"Blennerhassett","email":"kblennerhassett8@nhs.uk","gender":"Polygender"},
-{"id":10,"first_name":"Lanae","last_name":"Cuppleditch","email":"lcuppleditch9@businessweek.com","gender":"Agender"}]`;
+    <title>뭐지?</title>
+    <script src="js/employee1.js"></script>
 
-        console.log(jsonData);
-        let objData = JSON.parse(jsonData);
-        console.log(objData);
-
-        document.addEventListener('DOMContentLoaded', function () {
-            let tbody = document.querySelector('#list > tbody');
-
-            for (let i = 0; i < objData.length; i++) {
-                // <tr><td>id</td><td>first_name</td><td>last_name</td></tr>
-                let tr = document.createElement('tr');
-                // 필드의 갯수만큼 반복할 때 fon .. in 반복문 사용.
-                for (let field in objData[0]) {
-                    let td = document.createElement('td');
-                    let text = document.createTextNode(objData[i][field]);
-                    td.appendChild(text);
-                    tr.appendChild(td);
-                }
-                // 삭제버튼 생성.
-                let td = document.createElement('td');
-                let btn = document.createElement('input');
-                btn.type = 'button'; // btn.setAttribute('type', 'button') 같음.
-                btn.value = '삭제';
-                td.appendChild(btn);
-                tr.appendChild(td);
-
-                tbody.appendChild(tr);
-            }
-
-
-        });
-    </script>
 </head>
 
 <body>
