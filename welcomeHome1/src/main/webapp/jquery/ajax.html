@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'MOCK_DATA.json', // 요청페이지.
+                data: {
+                    page: 1
+                },
+                method: 'get',
+                dataType: 'json',
+                success: succesCallBack,
+
+                error: function (reject) {
+                    console.log(reject)
+                }
+            }); // XMLHttpRequest(); response(Text)
+        });
+
+        function succesCallBack(result) {
+            let data = result;
+            for (let row of data) {
+                let div = $('<div />').attr('class', 'row')
+                    .html('<span>' + row.id+'</span>&nbsp;&nbsp;&nbsp;<strong>'+row.first_name+'-'+ row.last_name +'</strong>');
+                    let btn= $('<button />').html('Del').on('click', delFuc);
+                    $(div).append(btn);
+                    $('#show').append(div);
+
+                    
+
+            }
+        }
+
+        function delFuc(){
+        $(this).parent().remove();//$로 제이쿼리방식으로나타내기_펑션;메소드로처리
+        }
+    </script>
+
+</head>
+
+<body>
+    <!-- 비동기방식으로 -->
+    <div id="show">
+        <div class="row">
+            <span>id</span>&nbsp;&nbsp;&nbsp;
+            <strong>first_name - lastname</strong>
+
+        </div>
+    </div>
+</body>
+
+</html>

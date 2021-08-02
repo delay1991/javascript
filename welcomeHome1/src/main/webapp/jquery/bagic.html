@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        //선택자:document.getElementById(name)
+        $(document).ready(function () {
+            $('#show').html('Hellow, World'); //jquery표현(선택자) 엘리먼트.이너HTML ="";
+            //다큐먼트가 준비되서 읽어지면 펑션을 실행하십시오.
+            let ul = $('<ul />');
+            ul.append($('<li />').html('Apple'));
+            ul.append($('<li />').html('banana'));
+
+            $('#show').append(ul);
+
+            //삭제
+            // $('#show').remove();
+
+            //이벤트
+            let btn = $('<button></button>').html('Del').on('click', function () {
+                console.log('delete');
+
+            });
+            $('#show').append(btn);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="show"></div>
+</body>
+
+</html>
