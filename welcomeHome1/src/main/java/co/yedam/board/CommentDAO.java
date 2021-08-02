@@ -6,38 +6,35 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CommentDAO extends DAO {
-
 	private static CommentDAO instance;
 
 	private CommentDAO() {
 
 	}
 
-	private static CommentDAO getInstance() {
+	public static CommentDAO getInstance() {
 		instance = new CommentDAO();
 		return instance;
 	}
 
 	// 글목록
-	public List<HashMap<String, Object>> selectAll(){ 
+	public List<HashMap<String, Object>> selectAll() {
 		connect();
-		
-		List<HashMap<String, Object>> list =
-		new ArrayList<String, Object>>
-				
+		List<HashMap<String, Object>> list = //
+				new ArrayList<HashMap<String, Object>>();
 		try {
-			pstmt = conn.prepareStatement("select*from comments");
+			pstmt = conn.prepareStatement("select * from commemts");
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				HashMap<String, Object>map = new HashMap<>();
+			while (rs.next()) {
+				HashMap<String, Object> map = new HashMap<>();
 				map.put("id", rs.getString("id"));
 				map.put("name", rs.getString("name"));
 				map.put("content", rs.getString("content"));
+				list.add(map);
 			}
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-		}finally {
+		} finally {
 			disconnect();
 		}
 		return list;
