@@ -29,11 +29,11 @@ public class CommentServlet extends HttpServlet {
 		String cmd = request.getParameter("cmd");
 
 		if (cmd == null) {
-			out.println(errorXML("cmd All"));
+			out.println(errorXML("cmd null"));
 
-		} else if (cmd.equals("selectAll")) {
+		} else if (cmd.equals("selectAll")) { // 1)전체조회.
 			try {
-				List<HashMap<String, Object>> list = // 전체입력
+				List<HashMap<String, Object>> list = //
 						CommentDAO.getInstance().selectAll();
 
 				StringBuffer sb = new StringBuffer();
@@ -49,43 +49,47 @@ public class CommentServlet extends HttpServlet {
 				}
 				sb.append("</data>");
 				sb.append("</result>");
-				System.out.println(sb.toString());
 				out.print(sb.toString());
 
 			} catch (Exception e) {
 				out.println(errorXML(e.getMessage()));
 			}
 
-		} else if (cmd.equals("insert")) {// 한건입력
+		} else if (cmd.equals("insert")) { // 2)한건입력.
 			try {
 				String name = request.getParameter("name");
 				String content = request.getParameter("content");
 				Comments comment = new Comments();
 				comment.setName(name);
 				comment.setContent(content);
-				HashMap<String, Object> map = CommentDAO.getInstance().insert(comment);
+				HashMap<String, Object> map = //
+						CommentDAO.getInstance().insert(comment);
 
 				out.println(dataXML(map));
 
 			} catch (Exception e) {
 				out.println(errorXML(e.getMessage()));
+
 			}
 
-		}else if(cmd.equals("update")) {
+		} else if (cmd.equals("update")) { // 3) 수정.
 			String id = request.getParameter("id");
 			String name = request.getParameter("name");
-			String content =request.getParameter("content");
-			Comments comment =new Comments();
+			String content = request.getParameter("content");
+
+			Comments comment = new Comments();
 			comment.setId(id);
 			comment.setName(name);
 			comment.setContent(content);
-			
-			HashMap<String, Object> map=CommentDAO.getInstance().update(comment);
+
+			HashMap<String, Object> map = //
+					CommentDAO.getInstance().update(comment);
+
 			out.println(dataXML(map));
+
 		}
-		
-	}//end of doGet();
-	
+	} // end of doGet();
+
 	private String dataXML(HashMap<String, Object> map) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<result>");
@@ -98,16 +102,15 @@ public class CommentServlet extends HttpServlet {
 		sb.append("</result>");
 		return sb.toString();
 	}
-	
+
 	private String errorXML(String msg) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<result>");
 		sb.append("<code>error</code>");
 		sb.append("<data>" + msg + "</data>");
 		sb.append("</result>");
-		
-		return sb.toString();
 
+		return sb.toString();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
