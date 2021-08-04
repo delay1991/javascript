@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function() {
+		loadCommentList();
+	});
+	//json데이터 호출 ajax.
+	function loadCommentList(){
+				$.ajax({
+					url : '../CommentServlet',
+					data : {
+						cmd : 'seletJson'
+					},
+					success : loadCommentResult, 
+					error : function(reject) {
+						console.log(reject);
+					}
+				});
+
+			}
+	//리스트보여주는 콜백
+	function loadCommentResult(resolve){
+		console.log(resolve);
+		let aryData = resolve;
+		for(let i=0; i<aryData.length; i++){
+			let commentDiv = makeCommentView(aryData[i]);
+			$('#commentList').append(commentDiv);
+		}
+	}
+	//오브젝트 한건을 매개값으로 받아서 div반환해주는 함수.
+	function makeCommentView(comment){ //{id:?,name:?,content:?}
+		let div= $('<div />').attr('id',comment.id);
+		let strong = $('<strong />').html(comment.name);
+		let span= $('<span />').html(comment.content);
+		let updateBtn= $('<input onclick="viewUpdateForm('+comment.id+')"/>').attr({'type':'button', 'value':'수정','data-id':comment.id});
+		let deleteBtn= $('<input onclick="confirmDeletion('+comment.id+')"/>').attr({'type':'button', 'value':'삭제'});
+		
+		
+		$(div).append(strong, span, updateBtn, deleteBtn);
+		
+		return div;
+	}
+	
+	//등록버튼.
+	function addComment(){
+		let name= document.addForm.name.value;
+		let content= document.addForm.content.value;
+		if(name ==''){
+			alret('이름을 입력하세요');
+			document.addForm.name.focus();
+			return;
+		}
+		if(content ==''){
+			alret('내용을 입력하세요');
+			document.addForm.content.focus();
+			return;
+		}
+		$.ajax({
+			url: '../CommentServlet',
+			data: {
+				cmd:'insertJson',
+				name: name,
+				content: content
+			},//'cmd=insertJson&name='+name+'&content='+content
+			success: addResult,
+			error: function(reject){
+				console.log(reject);
+			}
+		});
+	}
+	
+	//등록 콜백함수.
+	function addResult(resolve){
+		console.log(resolve);
+		let commentDiv = makeCommentView(resolve);
+		$('#commentList').append(commentDiv);
+		
+		document.addForm.content.value ='';
+		document.addForm.name.value ='';
+		document.addForm.name.focus();
+	}
+</script>
+</head>
+
+<body>
+	<!-- 댓글목록 -->
+	<div id='commentList'></div>
+	<!-- 댓글등록화면 -->
+	<div id='commentAdd'>
+		<form name='addForm' action=''>
+			이름: <input type='text' name='name' size='10'><br> 내용:
+			<textarea name='content' cols='20' rows='3'></textarea>
+			<br> <input type='button' value='등록' onclick='addComment()'>
+		</form>
+	</div>
+	<!--  댓글수정화면 -->
+	<div id='commentUpdate' style='display: none'>
+		<form name='updateForm' action=''>
+			<input type='hidden' name='id'> 이름:<input type='text'
+				name='name' size='10'><br> 내용:
+			<textarea name='content' cols='20' rows='3'></textarea>
+			<br> <input type='button' value='변경' onclick='updateComment()'>
+			<input type='button' value='취소' onclick='cancelComment()'>
+		</form>
+	</div>
+</body>
+
+</html>
