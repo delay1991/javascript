@@ -142,8 +142,9 @@
 	}
 
 	//취소버튼(수정하다 취소누르면 등록나옴)
-	function cancelUpdate() {
-		addComment();
+	function cancelComment() {
+		document.getElementById('commentUpdate').style.display = 'none';
+		document.getElementById('commentAdd').style.display = 'block';
 	}
 	//삭제버튼
 	function confirmDeletion(id) {

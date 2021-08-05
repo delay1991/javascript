@@ -122,7 +122,8 @@ public class CommentServlet extends HttpServlet {
 			Gson gson = new GsonBuilder().create();
 			out.println(gson.toJson(map));
 
-		} else if (cmd.equals("update")) {//
+		} else if (cmd.equals("updateJson")) {//
+			response.setContentType("text/json;charset=utf-8");
 			String id = request.getParameter("id");
 			String name = request.getParameter("name");
 			String content = request.getParameter("content");
@@ -134,11 +135,17 @@ public class CommentServlet extends HttpServlet {
 
 			HashMap<String, Object> map = CommentDAO.getInstance().update(comment);
 
-			out.println(dataXML(map));
-		} else if (cmd.equals("delete")) {
+			Gson gson = new GsonBuilder().create();
+			out.println(gson.toJson(map));
+
+		} else if (cmd.equals("deleteJson")) {
+			response.setContentType("text/json;charset=utf-8");
 			String id = request.getParameter("id");
 			HashMap<String, Object> map = CommentDAO.getInstance().delete(id);
-			out.println(dataXML(map));
+			
+			Gson gson = new GsonBuilder().create();
+			out.println(gson.toJson(map));
+			//out.println(dataXML(map));
 
 		}
 	}

@@ -35,6 +35,9 @@
 	//오브젝트 한건을 매개값으로 받아서 div반환해주는 함수.
 	function makeCommentView(comment){ //{id:?,name:?,content:?}
 		let div= $('<div />').attr('id',comment.id);
+		$(div).attr('data-id', comment.id)
+		$(div).attr('data-name', comment.name)
+		$(div).attr('data-content', comment.content)
 		let strong = $('<strong />').html(comment.name);
 		let span= $('<span />').html(comment.content);
 		let updateBtn= $('<input onclick="viewUpdateForm('+comment.id+')"/>').attr({'type':'button', 'value':'수정','data-id':comment.id});
@@ -84,6 +87,82 @@
 		document.addForm.name.value ='';
 		document.addForm.name.focus();
 	}
+	
+	//수정버튼클릭시
+	function  viewUpdateForm(id){
+		let updateFormDiv = $('#commentUpdate');
+		let commentDiv = $('#'+id);
+		console.log(commentDiv)
+		updateForm.id.value = $(commentDiv).attr('data-id');
+		updateForm.name.value =  $(commentDiv).attr('data-name');
+		updateForm.content.value =  $(commentDiv).attr('data-content');
+		$('#commentUpdate').css('display','block')
+		$(updateFormDiv).insertAfter(commentDiv);
+		$('#commentAdd').css('display','none')
+	}
+	
+	//변경클릭시
+	function updateComment(){
+		let id = updateForm.id.value;
+		let name = updateForm.name.value;
+		let content = updateForm.content.value;
+		$.ajax({
+			url: '../CommentServlet',
+			data: {
+				cmd:'updateJson',
+				id : id,
+				name: name,
+				content: content
+			},
+			success: updateResult,
+			error: function(reject){
+				console.log(reject);
+			}
+		})	
+	}
+	//댓글수정 콜백함수.
+	function updateResult(resolve){
+		console.log(resolve)
+		let commentDiv = makeCommentView(resolve);
+		let oldDiv = $('#'+resolve.id);
+		$(oldDiv).replaceWith(commentDiv);
+		
+		//수정화면 숨기고, 등록화면 보이도록.
+		$('#commentUpdate').css('display', 'none')
+		$('#commentAdd').css('display', 'block')
+		
+	}
+	//삭제버튼
+	function confirmDeletion(id){
+		$.ajax({
+			url: '../CommentServlet',
+			data: {
+				cmd:'deleteJson',
+				id : id
+			},
+			success: deleteResult,
+			error: function(reject){
+				console.log(reject);
+			}
+		})
+	}
+	
+	//삭제콜백
+	function deleteResult(resolve){
+		console.log(resolve)
+		$('#'+resolve.id).remove();
+	}
+	
+	//취소누르면 다시등록
+	function cancelComment(){
+		$('#commentUpdate').css('display', 'none')
+		$('#commentAdd').css('display', 'block')
+	}
+	
+	
+	
+	
+	
 </script>
 </head>
 
