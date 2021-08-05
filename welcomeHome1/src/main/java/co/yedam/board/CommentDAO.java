@@ -16,6 +16,27 @@ public class CommentDAO extends DAO {
 		instance = new CommentDAO();
 		return instance;
 	}
+	
+	public HashMap<String, Integer> getAmtByCountry(){
+		connect();
+		HashMap<String, Integer>map = new HashMap<String, Integer>();
+		String sql = "select billingCountry, sum(total) as amt from invoices i group by billingCountry";
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rs =pstmt.executeQuery();
+			while(rs.next()) {
+				map.put(rs.getString(1), rs.getInt(2));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect(); //호출시 락을 안생기게
+		}
+		return map;
+		
+	}
+	
 	//글삭제(매개값:글번호)
 	public HashMap<String, Object> delete(String id){
 		connect();
