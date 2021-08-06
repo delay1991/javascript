@@ -16,47 +16,47 @@ public class CommentDAO extends DAO {
 		instance = new CommentDAO();
 		return instance;
 	}
-	
-	public HashMap<String, Integer> getAmtByCountry(){
+
+	public HashMap<String, Integer> getAmtByCountry() {
 		connect();
-		HashMap<String, Integer>map = new HashMap<String, Integer>();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		String sql = "select billingCountry, sum(total) as amt from invoices i group by billingCountry";
 		try {
-			
 			pstmt = conn.prepareStatement(sql);
-			rs =pstmt.executeQuery();
-			while(rs.next()) {
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
 				map.put(rs.getString(1), rs.getInt(2));
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			disconnect(); //호출시 락을 안생기게
+		} finally {
+			disconnect(); // 호출시 락을 안생기게
 		}
 		return map;
-		
+
 	}
+
 	
-	//글삭제(매개값:글번호)
-	public HashMap<String, Object> delete(String id){
+
+	// 글삭제(매개값:글번호)
+	public HashMap<String, Object> delete(String id) {
 		connect();
-		String sql ="delete from commemts where id=?";
+		String sql = "delete from commemts where id=?";
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		try{
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, id);
-		int r =pstmt.executeUpdate();
-		System.out.println("삭제됨:"+r);
-		map.put("id", id);
-		return map;
-		}catch(SQLException e){
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			int r = pstmt.executeUpdate();
+			System.out.println("삭제됨:" + r);
+			map.put("id", id);
+			return map;
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			disconnect();
 		}
 		return null;
 	}
-
 
 	// 글내용수정
 	public HashMap<String, Object> update(Comments comment) {
@@ -162,4 +162,6 @@ public class CommentDAO extends DAO {
 		}
 		return list;
 	}
-}
+
+	
+	}

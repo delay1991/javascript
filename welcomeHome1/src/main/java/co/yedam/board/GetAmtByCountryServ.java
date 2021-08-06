@@ -15,29 +15,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 
-/**
- * Servlet implementation class GetAmtByCountryServ
- */
 @WebServlet("/GetAmtByCountryServ")
 public class GetAmtByCountryServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GetAmtByCountryServ() {
+       public GetAmtByCountryServ() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HashMap<String, Integer>map = CommentDAO.getInstance().getAmtByCountry();
 		Gson gson =new GsonBuilder().create();
-		
+		// 데이터모양 [[],[],[]] >> [{},{},{}]으로 바꿔야하는데 아직...ㅠㅠ
 		JsonArray aryOut = new JsonArray();
 		Set<String> set = map.keySet();
 		Iterator<String> iter = set.iterator();
@@ -54,17 +43,13 @@ public class GetAmtByCountryServ extends HttpServlet {
 			aryOut.add(aryIn); 
 
 		}
-		// [[k,v],[k,v],[k,v]]
+		
 		response.getWriter().print(gson.toJson(aryOut));
 		
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

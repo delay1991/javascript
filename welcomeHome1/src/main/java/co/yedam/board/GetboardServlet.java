@@ -28,10 +28,9 @@ public class GetboardServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/json;charset=utf-8");
-		//{"data":[[1번째],[2번째],[3번째], ...[마지막]]
+		//데이터모양 {"data":[[1번째],[2번째],[3번째], ...[마지막]]} 
 		List<HashMap<String, Object>> list = CommentDAO.getInstance().selectAll();
 		Gson gson = new GsonBuilder().create(); //데이터어떤모양일지 생각하삼
-		
 		
 		JsonArray outAry = new JsonArray();
 		for(int i=0; i<list.size(); i++) {
