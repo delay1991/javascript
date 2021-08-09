@@ -27,17 +27,21 @@ public class CalendarSevlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/json;charset=utf-8");
 		
 		PrintWriter out = response.getWriter();
 		String cmd = request.getParameter("cmd");
+		Gson gson = new GsonBuilder().create();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		if (cmd == null) {
+			
 			out.println(errorXML("cmd null"));
 		}else if(cmd.equals("selectAll")) { //전체조회
 			try {
 				List<HashMap<String, Object>> list = CalenderDAO.getInstance().selectAll();
-				Gson gson = new GsonBuilder().create();
 				
 				JsonArray outAry = new JsonArray();
 				for(int i=0; i<list.size(); i++) {
@@ -61,25 +65,24 @@ public class CalendarSevlet extends HttpServlet {
 				sb.append("</result>");
 				out.print(sb.toString());
 			}
-		}else if(cmd.equals("insert")) {
+		}else if(cmd.equals("insert")) { //입력
+			String title = request.getParameter("title");
+			String start =  request.getParameter("start");
+			String end =  request.getParameter("end");
+			Calendar cal= new Calendar();
+			cal.setTitle(title);
+			cal.setStart(start);
+			cal.setEnd(end);
+			
 			try {
-				String title = request.getParameter("title");
-				String start =  request.getParameter("start");
-				String end =  request.getParameter("end");
-				Calendar calendar = new Calendar();
-				calendar.setTitle(title);
-				calendar.setStart(start);
-				calendar.setEnd(end);
-				
-				HashMap<String, Object> map = CalenderDAO.getInstance().insert(comment);
+				HashMap<String, Object> data = CalenderDAO.getInstance().insert(cal);
+				map.put("code", "success");
+				map.put("data", data);
 				
 			}catch(Exception e) {
-				StringBuffer sb = new StringBuffer();
-				sb.append("<result>");
-				sb.append("<code>error</code>");
-				sb.append("<data>" + e.getMessage() + "</data>");
-				sb.append("</result>");
-				out.println(sb.toString());
+				e.printStackTrace();
+				map.put("code", "error");
+				map.put("data", e.getMessage());
 
 			}
 		}

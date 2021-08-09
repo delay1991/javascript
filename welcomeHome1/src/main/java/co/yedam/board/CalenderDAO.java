@@ -15,8 +15,8 @@ public class CalenderDAO extends DAO {
 	public static CalenderDAO getInstance() {
 		instance = new CalenderDAO();
 		return instance;
-	}
-	public List<HashMap<String, Object>> selectAll() {
+	} 
+	public List<HashMap<String, Object>> selectAll() { //전체목록조회
 		connect();
 		List<HashMap<String, Object>> list = //
 				new ArrayList<HashMap<String, Object>>();
@@ -43,26 +43,35 @@ public class CalenderDAO extends DAO {
 			disconnect();
 		}
 		return list;
-	}
+	}	
 	
-	public List<HashMap<String, Object>> insert(Calendar calendar){
-		
-		stmt = conn.createStatement(); 
-		int nextId = 0;
+	public HashMap<String, Object> insert(Calendar cal) throws Exception{
 		connect();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String sql = "insert into schedule values(?,?,?)";
 		
 		try {
-			conn.setAutoCommit(false);
-			stmt = conn.createStatement(); // pstmt ???
-			rs = stmt.executeQuery("insert into schedule values(?,?,?)");
-			if (rs.next()) {
-				nextId = rs.getInt("");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cal.getTitle());
+			pstmt.setString(2, cal.getStart());
+			pstmt.setString(3, cal.getEnd());
+			int r=pstmt.executeUpdate();
+			System.out.println(r+"건 입력.");
+			
+			map.put("title", cal.getTitle());
+			map.put("start", cal.getStart());
+			map.put("end", cal.getEnd());
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage());
+			
+		} finally {
+			disconnect();
 		}
-		return null;
+		
+		
+		return map;
+		
 	}
-	
-	
-	
-
-	
 }

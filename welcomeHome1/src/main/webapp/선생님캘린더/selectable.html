@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <link href='../lib/main.css' rel='stylesheet' />
+  <script src='../lib/main.js'></script>
+  <script src="../../js/jquery-3.6.0.min.js"></script>
+
+  <script>
+    function dateFormat(date) {
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+
+      month = month >= 10 ? month : '0' + month;
+      day = day >= 10 ? day : '0' + day;
+
+      return date.getFullYear() + '-' + month + '-' + day;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // 전체조회하는 서블릿 파일 호출.
+      $.ajax({
+        url: '../../CalendServlet',
+        data: {
+          cmd: 'selectAll' //파라미터로 cmd=selectAll 을 넘김.
+        },
+        success: showListCallBack, // 정상처리되면 실행할 콜백함수.
+        error: errorCallBack //에러발생되면 실행할 콜백함수.
+      });
+
+      function errorCallBack(reject) {
+        console.log(reject); // 콘솔에 메세지만 뿌러본다.
+      }
+
+      function showListCallBack(resolve) {
+        if (resolve.code == 'error') { // 에러가 발생하면 에러창 보여주고 프로그램 종료.
+          alert(resolve.data);
+          return;
+        }
+
+        var dbData = resolve.data; // 서블릿을 통해서 데이터를 가져오도록... 1.조회기능, 2.입력기능, 3.삭제기능.
+
+        // 콜백함수안에 FullCalendar 실행호출.
+        var calendarEl = document.getElementById('calendar');
+        var today = new Date();
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
+          initialDate: dateFormat(today), // '2021-08-12', 오늘날짜를 기본으로 달력셋팅하기.
+          navLinks: true, // can click day/week names to navigate views
+          selectable: true,
+          selectMirror: true,
+          select: selectCallBack,
+          eventClick: eventCallBack,
+          editable: true,
+          dayMaxEvents: true, // allow "more" link when too many events
+          events: dbData
+        });
+
+        function selectCallBack(arg) {
+          var title = prompt('Event Title:');
+          if (title) {
+            // 한건 입력하는 서블릿 호출.
+            $.ajax({
+              url: '../../CalendServlet',
+              data: {
+                cmd: 'insert',
+                title: title,
+                start: arg.startStr,
+                end: arg.endStr
+              },
+              success: function () {
+                calendar.addEvent({
+                  title: title,
+                  start: arg.start,
+                  end: arg.end,
+                  allDay: arg.allDay
+                });
+              },
+              error: function (reject) {
+                console.log(reject)
+              },
+              complete: function () { // 요부분은 성공하건 실패하건 요청이 끝나면 실행하도록 하는 옵션.
+                calendar.unselect();
+              }
+            });
+
+          }
+        } // end of function selectCallBack(arg)
+
+        function eventCallBack(arg) {
+          console.log(arg);
+          if (confirm('Are you sure you want to delete this event?')) {
+            $.ajax({
+              url: '../../CalendServlet',
+              data: {
+                cmd: 'delete',
+                title: arg.el.innerText
+              },
+              success: function (resolve) {
+                arg.event.remove();
+
+              },
+              error: function (reject) {
+                console.log(reject);
+              }
+            });
+          }
+        } // end of function eventCallBack(arg)
+
+        calendar.render();
+      }
+    });
+  </script>
+  <style>
+    body {
+      margin: 40px 10px;
+      padding: 0;
+      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    #calendar {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id='calendar'></div>
+
+</body>
+
+</html>
