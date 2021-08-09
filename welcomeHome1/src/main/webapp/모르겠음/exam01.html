@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Member/Json</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+</head>
+<style>
+    div {
+        display: inline-block;
+    }
+    table {
+        border : 1px solid ;
+        border-collapse: collapse;
+        margin: 5px;
+    }
+    th {
+        border : 1px solid ;
+        border-collapse: collapse;
+        padding-left : 5px;
+        padding-right : 10px;
+        padding-bottom : 3px;
+        background-color: rgb(207, 245, 207);
+    
+    }
+    tr td {
+        border : 1px solid ;
+        border-collapse: collapse;
+        padding-left : 5px;
+        padding-right : 10px;
+        padding-bottom : 3px;
+    }
+
+    .row1 , .row5 {
+        text-align: center;
+    }
+</style>
+<body>
+<div id="memberList"></div>
+<script>
+    $(document).ready(function () {
+        loadMemberList();
+    });
+
+    function loadMemberList() {
+        $.ajax({
+            url: 'members.json',
+            success: result,
+            error: function (reject) {
+                console.log(reject);
+            }
+        });
+    }
+
+    function result(resolve){
+        console.log(resolve);
+        let table = $('<table />');
+        let thead = $('<thead />');
+        let tbody = $('<tbody />');
+        
+        let rowHead = $('<tr />');
+        let num = 1;
+        for(let field in resolve[1]){
+            console.log(field);
+            let col = $('<th />').addClass('row'+num).html(field); 
+            $(rowHead).append(col);
+            num++;
+        }
+
+        for(let i = 0; i < resolve.length;i++){
+            let row = makeRow(resolve[i]);
+            $(tbody).append(row);
+        }
+        
+        $(thead).append(rowHead);
+        $(table).append(thead);
+        $(table).append(tbody);
+
+        $('#memberList').append(table);
+        $('tr:odd').css('backgroundColor', 'lightYellow');
+    }
+
+    function makeRow(data){
+        let row = $('<tr />');
+        let num = 1;
+        for(let field in data){
+            let col = $('<td />').addClass('row'+num).html(data[field]); 
+            $(row).append(col);
+            num++;
+        }
+        return row;
+    }
+</script>
+</body>
+
+</html>

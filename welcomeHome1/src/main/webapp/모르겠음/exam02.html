@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>employees/xml</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<style>
+    li {
+        margin : 5px;
+    }
+</style>
+<body>
+    <div id="empList"></div>
+    <script>
+        $(document).ready(function () {
+            loadMemberList();
+        });
+
+        function loadMemberList() {
+            $.ajax({
+                url: 'employees.xml',
+                success: result,
+                error: function (reject) {
+                    console.log(reject);
+                }
+            });
+        }
+
+        function result(resolve){
+            console.log(resolve.children[0]);
+            
+            let cnt = resolve.children[0].children.length;
+            console.log(cnt);
+            let ul = $('<ul>');   
+            for(let i = 0 ; i < cnt; i++){
+                let empId = resolve.children[0].children[i].children[0].innerHTML;
+                let firstNm = resolve.children[0].children[i].children[1].innerHTML;
+                let phone = resolve.children[0].children[i].children[5].innerHTML;
+
+                let li = $('<li>').html( firstNm + " ( ID : " + empId  + " ) 연락처 : " + phone );
+                $(ul).append(li)
+            }
+
+            $('#empList').append(ul);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>화면구연/exam001.html</title>
+<!-- <script src="../members.json"></script> -->
+<script>
+    	let jsonData = `[{"mem_id":1,"first_name":"Dasie","last_name":"Dickon","email":"ddickon0@cnet.com","gender":"Female","address":"0 Vahlen Point"},
+    		{"mem_id":2,"first_name":"George","last_name":"Mealiffe","email":"gmealiffe1@pagesperso-orange.fr","gender":"Female","address":"72 Roth Park"},
+    		{"mem_id":3,"first_name":"Ed","last_name":"Petto","email":"epetto2@imdb.com","gender":"Male","address":"81517 Lighthouse Bay Center"},
+    		{"mem_id":4,"first_name":"Marcel","last_name":"Caunter","email":"mcaunter3@sourceforge.net","gender":"Male","address":"5581 Canary Terrace"},
+    		{"mem_id":5,"first_name":"Sarine","last_name":"Janauschek","email":"sjanauschek4@arstechnica.com","gender":"Female","address":"7643 Rowland Junction"},
+    		{"mem_id":6,"first_name":"Lindsy","last_name":"Elcom","email":"lelcom5@zdnet.com","gender":"Female","address":"7912 American Plaza"},
+    		{"mem_id":7,"first_name":"Brook","last_name":"Weldon","email":"bweldon6@live.com","gender":"Male","address":"35 Katie Court"},
+    		{"mem_id":8,"first_name":"Ronni","last_name":"Naulty","email":"rnaulty7@dyndns.org","gender":"Female","address":"7 Schiller Circle"},
+    		{"mem_id":9,"first_name":"Ossie","last_name":"Razzell","email":"orazzell8@webeden.co.uk","gender":"Male","address":"18 Hovde Park"},
+    		{"mem_id":10,"first_name":"Kira","last_name":"Khilkov","email":"kkhilkov9@cyberchimps.com","gender":"Female","address":"3 Lotheville Terrace"}]`
+    		
+    		//console.log(jsonData);
+		
+		let objData = JSON.parse(jsonData);
+		console.log(objData);
+
+     
+
+		for(let i = 0; i<objData[i].length; i++) {
+            let tr = document.createElement('tr');
+
+            for (let field in objData[0]) {
+                    let td = document.createElement('td');
+                    let text = document.createTextNode(objData[i][field]);
+                    td.appendChild(text);
+                    tr.appendChild(td);
+            }
+            let td = document.createElement('td');
+                tbody.appendChild(tr);
+
+		}
+
+    
+    </script>
+</head>
+<body>
+	<div id="show"></div>
+	<table id="list">
+		<thead>
+			<tr>
+				<th>사원번호</th>
+				<th>이름</th>
+				<th>성</th>
+				<th>이메일</th>
+				<th>성별</th>
+				<th>이메일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form>
+				사원번호:
+				<td type="number" name="" id="num"></td> 이름:
+				<td type="text" name="" id="first_name"></td> 성:
+				<td type="text" name="" id="last_name"></td> 이메일:
+				<td type="text" name="" id="mail"></td> 성별:
+				<td type="text" name="" id="gender"></td> 주소:
+				<td type="text" name="" id="address"></td>
+
+			</form>
+
+			<h3>사원 정보 리스트</h3>
+		</tbody>
+
+	</table>
+
+
+</body>
+</html>

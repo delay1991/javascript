@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>json</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		$.ajax({
+			url: "members.json",
+			dataType: 'json',
+			success: function (result) {
+				console.log(result);
+				for (let i = 0; i < result.length; i++) {
+					let tr = $('<tr />');
+					for (let field in result[0]) {
+						let td = $('<td />').html(result[i][field]);
+						$(tr).append(td);
+					}
+					$('#list').append(tr);
+				}
+				$('#list').attr('border', '1')
+			}
+		})
+	</script>
+</head>
+
+<body>
+	<div id="show">
+		<table id='list'>
+			<thead>
+				<tr>
+					<th>사원번호</th>
+					<th>성</th>
+					<th>이름</th>
+					<th>이메일</th>
+					<th>성별</th>
+					<th>주소</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</body>
+
+</html>
